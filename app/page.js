@@ -2,8 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
+
 import { useState } from "react";
+
 import HamburgerMenu from "./components/HamburgerMenu";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '../components/ui/carousel';
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -16,7 +26,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-gradient-to-b from-[#DEFAFF] via-[#BCFFEF] to-[#FFFFFF]">
+    <div className="min-h-screen flex flex-col font-sans bg-gradient-to-b from-[#DEFAFF] via-[#BCFFEF] to-[#FFFFFF] bg-fixed">
       {/* Hamburger Menu */}
       <HamburgerMenu />
 
@@ -77,51 +87,92 @@ export default function Home() {
         <Image src="/logo.png" alt="Site logo" width={140} height={140} />
       </div>
 
-      {/* Main Content */}
-      <main className="flex flex-col items-center pt-40 pb-10 px-4 flex-grow">
-        <Link
-          href="/project_page"
-          className="rounded-full bg-blue-500 text-white px-4 py-2 mt-6 hover:bg-blue-600"
-        >
-          Go to Upload Form
-        </Link>
+<Link
+  href="/project_page"
+  className="absolute rounded-full bg-blue-300 text-white px-1 py-1 mt-1 hover:bg-blue-600"
+  style={{ top: "20px", right: "20px" }}
+>
+  Go to Upload Form
+</Link>
 
-        {/* Story Section */}
-        <div className="mt-12 max-w-xl text-gray-800 text-left">
-          <h2 className="text-2xl font-bold mb-4">The Enchanted Forest: A Tale of Courage</h2>
-          <p>
-            Once upon a time, in a small village nestled between the mountains and the sea,
-            there lived a young girl named Elara. Elara was no ordinary girl; she possessed
-            a rare gift—a deep connection to the forest that surrounded her village.
-          </p>
-          <p>
-            The villagers often spoke of the forest with a mixture of awe and fear. They believed
-            it was enchanted, filled with mysterious creatures and ancient magic. But Elara felt
-            at home among the towering trees, the whispering leaves, and the chattering animals.
-          </p>
-          <p>
-            One fateful day, disaster struck the village. A terrible drought dried up their rivers,
-            withered their crops, and threatened their way of life. The village elder told a tale of
-            a magical spring deep within the forest, said to be guarded by a fierce guardian. It was
-            the only hope to save the village, but no one dared to venture into the heart of the forest.
-          </p>
-          <p>
-            Elara knew she had to try. Armed with her courage and her unique bond with the forest,
-            she ventured into the unknown. The journey was perilous, filled with challenges that tested
-            her resolve. She faced wild beasts, solved riddles of the ancient trees, and overcame her own fears.
-          </p>
-          <p>
-            In the end, Elara's bravery and determination led her to the magical spring. The guardian,
-            a majestic creature with shimmering scales and kind eyes, recognized her pure heart and
-            allowed her to take the water. She returned to the village as a hero, bringing hope and life
-            back to her people.
-          </p>
-          <p>
-            From that day forward, Elara's name was spoken with reverence, and the enchanted forest
-            became a symbol of courage and unity for the villagers.
-          </p>
-        </div>
-      </main>
+      {/* Main Content */}
+      <main className="flex flex-col items-center pt-10 pb-10 px-4 min-h-full w-full">
+  {/* Web Development Section */}
+  <div className="w-full max-w-4xl mt-[50px] ml-[300px] mb-9"> {/* Increased margin-bottom */}
+    <div className="text-2xl font-bold mb-4 text-left">
+      <h2>Web Development</h2>
+    </div>
+    <div className="w-full">
+      <Carousel 
+        width={900} 
+        height={300}
+      >
+        <CarouselContent>
+          {[1, 2, 3, 4, 5, 6, 7].map((index) => (
+            <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4 p-4">
+              <div className="bg-white/50 backdrop-blur-sm rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="aspect-square relative">
+                  <Image
+                    src={`/project${index}.jpeg`}
+                    alt={`Project ${index}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold mb-2">Project {index}</h3>
+                  <p className="text-sm text-gray-600">
+                    This is a sample project description for project {index}
+                  </p>
+                </div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="hidden sm:flex" />
+        <CarouselNext className="hidden sm:flex" />
+      </Carousel>
+    </div>
+  </div>
+
+  {/* Machine Learning Section */}
+  <div className="w-full max-w-4xl mt-[350px] ml-[300px] mb-9"> {/* Increased margin-bottom */}
+    <div className="text-2xl font-bold mb-4 text-left">
+      <h2>Machine Learning</h2>
+    </div>
+    <div className="w-full">
+      <Carousel 
+        width={900} 
+        height={300}
+      >
+        <CarouselContent>
+          {[1, 2, 3, 4, 5, 6, 7].map((index) => (
+            <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4 p-4">
+              <div className="bg-white/50 backdrop-blur-sm rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="aspect-square relative">
+                  <Image
+                    src={`/project${index}.jpeg`}
+                    alt={`Project ${index}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold mb-2">Project {index}</h3>
+                  <p className="text-sm text-gray-600">
+                    This is a sample project description for project {index}
+                  </p>
+                </div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="hidden sm:flex" />
+        <CarouselNext className="hidden sm:flex" />
+      </Carousel>
+    </div>
+  </div>
+</main>
     </div>
   );
 }
