@@ -51,7 +51,7 @@ export default function HamburgerMenu() {
           <ul>
             <li>
               <a
-                href="/page.js"
+                href="/"
                 className="flex items-center py-2 px-4 hover:bg-green-200 dark:hover:bg-green-200 rounded text-black"
                 role="menuitem"
               >

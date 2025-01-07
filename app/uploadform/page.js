@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import HamburgerMenu from "../components/HamburgerMenu";
 
 // Reusable Input Field Component
 const InputField = ({ label, type = "text", placeholder, value, onChange, required = false, ...props }) => (
@@ -51,14 +52,11 @@ const FileInputField = ({ label, accept, onChange, required = false, maxFiles = 
 );
 
 const ProjectUploadForm = () => {
-  const [isOpen, setIsOpen] = useState(true);
   const [creatorNames, setCreatorNames] = useState([""]);
   const [imageFiles, setImageFiles] = useState([]);
   const [videoFile, setVideoFile] = useState(null);
   const [pdfFiles, setPdfFiles] = useState([]);
   const router = useRouter();
-
-  const closeForm = () => router.push("/");
 
   const addCreator = () => setCreatorNames([...creatorNames, ""]);
 
@@ -111,20 +109,11 @@ const ProjectUploadForm = () => {
     }
   };
 
-  if (!isOpen) return null;
-
   return (
+
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-100 to-white">
+        
       <div className="w-full max-w-3xl bg-white p-8 shadow-lg rounded-lg relative">
-        {/* Close Button */}
-        <button
-          onClick={closeForm}
-          className="absolute top-4 right-4 text-gray-600 hover:text-red-600"
-        >
-          ×
-        </button>
-
-
         {/* Form Heading */}
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
           Project Uploading Form
