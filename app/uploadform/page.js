@@ -124,10 +124,6 @@ const ProjectUploadForm = () => {
           ×
         </button>
 
-        {/* Logo */}
-        <div className="absolute top-[-40px] left-4">
-          <Image src="/logo.png" alt="Logo" width={120} height={120} />
-        </div>
 
         {/* Form Heading */}
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">

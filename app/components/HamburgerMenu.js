@@ -23,7 +23,7 @@ export default function HamburgerMenu() {
       {/* Hamburger Button */}
       <button
         onClick={toggleMenu}
-        className="p-2 bg-transparent border-none"
+        className="p-2 bg-rgb(32, 114, 103) border-none"
         aria-expanded={isOpen}
         aria-label="Toggle menu"
         style={burgerPosition} // Apply position styles here
@@ -40,7 +40,7 @@ export default function HamburgerMenu() {
       {/* Menu */}
       {isOpen && (
         <div
-          className="absolute left-0 top-12 w-72 bg-transparent shadow-lg p-4 rounded-lg dark:bg-transparent dark:text-white z-50 max-h-[80vh] overflow-y-auto transition-all duration-200 ease-in-out"
+          className="absolute left-0 top-12 w-72 bg-green-100 shadow-lg p-4 rounded-lg dark:bg-blue-100 dark:text-white z-50 max-h-[80vh] overflow-y-auto transition-all duration-200 ease-in-out"
           role="menu"
           style={{
             maxHeight: "80vh", // Limit height for better visibility
@@ -52,7 +52,7 @@ export default function HamburgerMenu() {
             <li>
               <a
                 href="/page.js"
-                className="flex items-center py-2 px-4 hover:bg-blue-200 dark:hover:bg-green-200 rounded text-black"
+                className="flex items-center py-2 px-4 hover:bg-green-200 dark:hover:bg-green-200 rounded text-black"
                 role="menuitem"
               >
                 <Image
@@ -92,7 +92,7 @@ export default function HamburgerMenu() {
               <li key={label}>
                 <a
                   href={href}
-                  className="flex items-center py-2 px-4 hover:bg-blue-200 dark:hover:bg-green-200 rounded text-black"
+                  className="flex items-center py-2 px-4 hover:bg-green-200 dark:hover:bg-green-200 rounded text-black"
                   role="menuitem"
                 >
                   <Image
@@ -125,7 +125,7 @@ export default function HamburgerMenu() {
               <li key={label}>
                 <a
                   href={href}
-                  className="flex items-center py-2 px-4 hover:bg-blue-200 dark:hover:bg-green-200 rounded text-black"
+                  className="flex items-center py-2 px-4 hover:bg-green-200 dark:hover:bg-green-200 rounded text-black"
                   role="menuitem"
                 >
                   <Image

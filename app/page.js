@@ -5,15 +5,9 @@ import Link from "next/link";
 
 import { useState } from "react";
 
+import ProjectCarousel from "./components/carousel"
 import HamburgerMenu from "./components/HamburgerMenu";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '../components/ui/carousel';
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -82,10 +76,10 @@ export default function Home() {
   </a>
 </div>
 
-      {/* Logo */}
+      {/* Logo
       <div className="absolute" style={{ top: "-39px", left: "80px" }}>
         <Image src="/logo.png" alt="Site logo" width={140} height={140} />
-      </div>
+      </div> */}
 
 <Link
   href="/project_page"
@@ -97,82 +91,8 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex flex-col items-center pt-10 pb-10 px-4 min-h-full w-full">
-  {/* Web Development Section */}
-  <div className="w-full max-w-4xl mt-[50px] ml-[300px] mb-9"> {/* Increased margin-bottom */}
-    <div className="text-2xl font-bold mb-4 text-left">
-      <h2>Web Development</h2>
-    </div>
-    <div className="w-full">
-      <Carousel 
-        width={900} 
-        height={300}
-      >
-        <CarouselContent>
-          {[1, 2, 3, 4, 5, 6, 7].map((index) => (
-            <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4 p-4">
-              <div className="bg-white/50 backdrop-blur-sm rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <div className="aspect-square relative">
-                  <Image
-                    src={`/project${index}.jpeg`}
-                    alt={`Project ${index}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">Project {index}</h3>
-                  <p className="text-sm text-gray-600">
-                    This is a sample project description for project {index}
-                  </p>
-                </div>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="hidden sm:flex" />
-        <CarouselNext className="hidden sm:flex" />
-      </Carousel>
-    </div>
-  </div>
-
-  {/* Machine Learning Section */}
-  <div className="w-full max-w-4xl mt-[350px] ml-[300px] mb-9"> {/* Increased margin-bottom */}
-    <div className="text-2xl font-bold mb-4 text-left">
-      <h2>Machine Learning</h2>
-    </div>
-    <div className="w-full">
-      <Carousel 
-        width={900} 
-        height={300}
-      >
-        <CarouselContent>
-          {[1, 2, 3, 4, 5, 6, 7].map((index) => (
-            <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4 p-4">
-              <div className="bg-white/50 backdrop-blur-sm rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <div className="aspect-square relative">
-                  <Image
-                    src={`/project${index}.jpeg`}
-                    alt={`Project ${index}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">Project {index}</h3>
-                  <p className="text-sm text-gray-600">
-                    This is a sample project description for project {index}
-                  </p>
-                </div>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="hidden sm:flex" />
-        <CarouselNext className="hidden sm:flex" />
-      </Carousel>
-    </div>
-  </div>
-</main>
+            <ProjectCarousel/>
+       </main>
     </div>
   );
 }

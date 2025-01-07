@@ -1,10 +1,12 @@
+const {nextui} = require('@nextui-org/theme');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     darkMode: ["class"],
-    content: [
-    "./app/**/*.{js,ts,jsx,tsx}", // Adjust paths to include all relevant files
-    "./pages/**/*.{js,ts,jsx,tsx}",
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "// Adjust paths to include all relevant files\n    \"./pages/**/*.{js,ts,jsx,tsx}\"",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@nextui-org/theme/dist/components/image.js"
   ],
   theme: {
   	extend: {
@@ -57,5 +59,5 @@ module.exports = {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),nextui()],
 }
