@@ -9,7 +9,8 @@ export default function Developers() {
   , '');
 
   return (
-    <div className="flex flex-col gap-4 text-bold">
+<div className="flex gap-4  text-bold">
+
       {developers.map((developer, index) => (
         <Chip
           key={index}

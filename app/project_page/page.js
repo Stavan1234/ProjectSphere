@@ -23,31 +23,31 @@ export default function Project_page() {
 
       {/* Main Content */}
       <main className="flex flex-col items-center pt-20 pb-10 px-4 min-h-full w-full">
-        <h1 className="text-4xl font-bold text-center">Project Title</h1>
-        <div className="items-left gap-4 mt-[50px] ml-[-900px]">
-          <h2 className="font-bold ml-[-40px] text-2xl mb-4">Creators:</h2>
-          <Developers />
+  {/* Page Heading */}
+  <h1 className="text-4xl font-bold text-center">Project Title</h1>
 
-          {/* Domain Section */}
-          <div className="flex items-center ml-[-40px] mt-12">
-            <h2 className="font-bold text-2xl mr-2">Domain:</h2>
-            <span className="text-xl text-gray-700">{userProps.domain}</span>
-          </div>
+  {/* Main Content Wrapper */}
+  <div className="w-full max-w-4xl pl-[10px]">
+    {/* Creators Section */}
+    <div className="flex items-center gap-4 mt-[50px]">
+      <h2 className="font-bold text-2xl">Creators:</h2>
+      <span><Developers /></span>
+    </div>
 
-          {/* Technologies Section */}
-          <div className="ml-[-40px] mt-12">
-            <h2 className="font-bold text-2xl mb-4">Technologies Used:</h2>
-            {/* Using the Technologies component here */}
-            <Technologies />
-          </div>
+    {/* Domain Section */}
+    <div className="flex items-center gap-4 mt-12">
+      <h2 className="font-bold text-2xl">Domain:</h2>
+      <span className="text-xl text-gray-700">{userProps.domain}</span>
+    </div>
 
-          {/* <div className="ml-[-40px] mt-12">
-            <h2 className="font-bold text-2xl mb-4">Project Description:</h2>
-            <ProjectContent />
-          </div> */}
+    {/* Technologies Section */}
+    <div className="mt-6 flex items-center">
+      <h2 className="font-bold text-2xl mb-4">Technologies Used:</h2>
+      <Technologies />
+    </div>
+  </div>
+</main>
 
-        </div>
-      </main>
 
       <div className="ml-[-40px] mt-12">
           <Multimedia/>
