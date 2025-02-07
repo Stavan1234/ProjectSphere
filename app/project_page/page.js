@@ -24,7 +24,12 @@ export default function Project_page() {
       {/* Main Content */}
       <main className="flex flex-col items-center pt-20 pb-10 px-4 min-h-full w-full">
   {/* Page Heading */}
-  <h1 className="text-4xl font-bold text-center">Project Title</h1>
+  <div className="w-[900px] mx-auto">
+  <h1 className="text-4xl text-center">
+    <b>BookNest:</b> A cozy digital nest to manage books, readers, and library operations.
+  </h1>
+</div>
+
 
   {/* Main Content Wrapper */}
   <div className="w-full max-w-4xl pl-[10px]">

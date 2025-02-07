@@ -1,238 +1,139 @@
 "use client";
 
 import React, { useState } from "react";
-import { Select, Textarea, Input, Button, Chip, Row, Col, Spacer } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
-
-// Reusable Input Field Component
-const InputField = ({ label, placeholder, value, onChange, required = false }) => (
-  <div>
-    <label className="block text-gray-700 font-medium mb-2">{label}</label>
-    <Input
-      fullWidth
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      required={required}
-      clearable
-    />
-  </div>
-);
-
-// Reusable TextArea Component
-const TextAreaField = ({ label, placeholder, value, onChange, rows = 4, required = false }) => (
-  <div>
-    <label className="block text-gray-700 font-medium mb-2">{label}</label>
-    <Textarea
-      fullWidth
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      rows={rows}
-      required={required}
-    />
-  </div>
-);
-
-// Reusable Select Dropdown for Categories
-const SelectCategory = ({ categories, value, onChange }) => (
-  <Select fullWidth value={value} onChange={onChange} aria-label="Category">
-    <Select.Option value="">Select Category</Select.Option>
-    {categories.map((category) => (
-      <Select.Option key={category} value={category}>
-        {category}
-      </Select.Option>
-    ))}
-  </Select>
-);
+import { Input } from "@nextui-org/react";
+import { Textarea } from "@/components/ui/textarea"; 
+import CreatorNames from "./creatorname";
+import TechnologiesUsed from "./technologiesused";
+import ProjectDomain from "./ProjectDomain";
+import supabase from "../config/ProjectSphereClient"; 
+import { Button } from "@/components/ui/button"; 
 
 const ProjectUploadForm = () => {
-  const [creatorNames, setCreatorNames] = useState([""]);
-  const [domain, setDomain] = useState("");
-  const [technologies, setTechnologies] = useState([]);
-  const [techCategories, setTechCategories] = useState([]);
-  const [categoryInput, setCategoryInput] = useState("");
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [creatorNames, setCreatorNames] = useState([]); // Start as an empty array
+  const [technologies, setTechnologies] = useState([]); // Empty array, avoid unnecessary nesting
+  const [selectedDomain, setSelectedDomain] = useState("");
+  const [checkAgree, setCheckAgree] = useState(false);
 
-  const router = useRouter();
+  // Handle form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  // List of available categories based on domain
-  const categories = [
-    "Languages",
-    "Frameworks & Tools",
-    "Databases",
-    "Libraries & Tools",
-    "Hardware",
-    "Sensors",
-    "Software",
-    "Platforms",
-    "Tools",
-    "Frameworks",
-  ];
+    if (!title || !content || creatorNames.length === 0 || technologies.length === 0 || !selectedDomain) {
+      alert("Please fill in all fields.");
+      return;
+    }
 
-  const domains = [
-    { label: "Web Development", value: "web-development" },
-    { label: "Machine Learning", value: "machine-learning" },
-    { label: "IOT & Embedded Systems", value: "iot-embedded-systems" },
-    { label: "Robotics and Automation", value: "robotics-automation" },
-    { label: "Digital Signal Processing & Communications", value: "digital-signal-processing" },
-    { label: "Software Development", value: "software-development" },
-    { label: "Open Domain", value: "open-domain" },
-    { label: "Artificial Intelligence", value: "artificial-intelligence" },
-    { label: "Cloud Computing", value: "cloud-computing" },
-    { label: "Cybersecurity", value: "cybersecurity" },
-    { label: "Data Science", value: "data-science" },
-  ];
+    if (!checkAgree) {
+      alert("You must agree to the declaration.");
+      return;
+    }
 
-  // Handle Domain Change
-  const handleDomainChange = (e) => {
-    const selectedDomain = e.target.value;
-    setDomain(selectedDomain);
-    // Define technologies based on domain selection
-    setTechCategories(getCategoriesForDomain(selectedDomain));
-  };
+    console.log("Form submitted successfully!");
+    console.log({ title, content, creatorNames, technologies, selectedDomain });
 
-  const getCategoriesForDomain = (domain) => {
-    const domainCategories = {
-      "web-development": [
-        "Languages",
-        "Frameworks & Tools",
-        "Databases",
-      ],
-      "machine-learning": [
-        "Languages",
-        "Libraries & Tools",
-        "Platforms",
-      ],
-      "iot-embedded-systems": [
-        "Hardware",
-        "Sensors",
-        "Software",
-      ],
-      "robotics-automation": [
-        "Hardware",
-        "Software",
-        "Frameworks",
-      ],
-      "digital-signal-processing": [
-        "Languages",
-        "Libraries",
-        "Hardware",
-      ],
-      "software-development": [
-        "Languages",
-        "Frameworks",
-        "Tools",
-      ],
-      "open-domain": ["Tools"],
-      "artificial-intelligence": [
-        "Languages",
-        "Libraries & Tools",
-        "Platforms",
-      ],
-      "cloud-computing": ["Languages", "Platforms", "Tools"],
-      "cybersecurity": ["Languages", "Tools", "Frameworks"],
-      "data-science": ["Languages", "Libraries", "Platforms"],
-    };
-    return domainCategories[domain] || [];
-  };
+    try {
+      const { data, error } = await supabase
+        .from("ProjectSphere Form")
+        .insert([
+          {
+            Project_Title: title,
+            Project_Text_area: content,
+            Creator_names: creatorNames,
+            Tech_Used: technologies,
+            Project_Domain: selectedDomain,
+          }
+        ]);
 
-  const handleAddTechnology = () => {
-    setTechnologies([...technologies, { category: categoryInput, technology: "" }]);
-    setCategoryInput(""); // Reset input after adding
-  };
+      if (error) {
+        console.error("Error submitting data:", error.message);
+        alert("Error submitting project data: " + error.message);
+      } else {
+        alert("Project submitted successfully!");
 
-  const handleTechChange = (index, value) => {
-    const updatedTechnologies = [...technologies];
-    updatedTechnologies[index].technology = value;
-    setTechnologies(updatedTechnologies);
+        // Reset form
+        setTitle('');
+        setContent('');
+        setCreatorNames([]);
+        setTechnologies([]);
+        setSelectedDomain("");
+        setCheckAgree(false);
+      }
+    } catch (error) {
+      console.error("Unexpected error:", error.message);
+      alert("Unexpected error occurred.");
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-100 to-white">
-      <div className="w-full max-w-3xl bg-white p-8 shadow-lg rounded-lg">
-        <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">Project Upload Form</h1>
-        <form className="space-y-4">
-          {/* Project Title */}
-          <InputField label="Project Title" placeholder="Enter project title" required />
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="p-5 w-full max-w-4xl">
+        <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">Project Uploading Form</h1>
+        <p className="text-sm text-gray-600 text-center mb-4">
+          <strong>Note:</strong> Do not include the source code used to create the project at any point of the form.
+          <br />
+          <span className="text-red-500">* All fields are required</span>
+        </p>
 
-          {/* Project Creator Names */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Project Creator Names:</label>
-            {creatorNames.map((creator, index) => (
-              <div key={index} className="flex items-center mb-2">
-                <Input
-                  fullWidth
-                  value={creator}
-                  onChange={(e) => {
-                    const updatedNames = [...creatorNames];
-                    updatedNames[index] = e.target.value;
-                    setCreatorNames(updatedNames);
-                  }}
-                  placeholder={`Creator Name ${index + 1}`}
-                  required
-                />
-                {creatorNames.length > 1 && (
-                  <Button
-                    type="button"
-                    onClick={() => setCreatorNames(creatorNames.filter((_, i) => i !== index))}
-                    className="ml-2"
-                    color="error"
-                    size="sm"
-                  >
-                    Remove
-                  </Button>
-                )}
-              </div>
-            ))}
-            <Button type="button" onClick={() => setCreatorNames([...creatorNames, ""])} className="text-blue-500">
-              + Add Creator
-            </Button>
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold mb-4">Project Title:</h3>
+            <Input
+              placeholder="Enter project title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              fullWidth
+              className="shadow-lg border border-[#00A8A8] bg-[#E0F7FA] text-[#004D40] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00ACC1]"
+            />
           </div>
 
-          {/* Project Domain */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Project Domain</label>
-            <Select fullWidth value={domain} onChange={handleDomainChange}>
-              {domains.map((domain) => (
-                <Select.Option key={domain.value} value={domain.value}>
-                  {domain.label}
-                </Select.Option>
-              ))}
-            </Select>
+            <CreatorNames onCreatorNamesChange={setCreatorNames} />
           </div>
 
-          {/* Dynamic Technology Inputs */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Technologies Used</label>
-            {techCategories.map((category, index) => (
-              <Row key={index} align="center" className="space-x-4 mb-2">
-                <Col span={6}>
-                  <Chip>{category}</Chip>
-                </Col>
-                <Col span={12}>
-                  <Input
-                    fullWidth
-                    placeholder={`Technology for ${category}`}
-                    value={technologies[index]?.technology || ""}
-                    onChange={(e) => handleTechChange(index, e.target.value)}
-                  />
-                </Col>
-              </Row>
-            ))}
-            <Row justify="center">
-              <Col span={12}>
-                <Button type="button" onClick={handleAddTechnology} fullWidth>
-                  Add Technology
-                </Button>
-              </Col>
-            </Row>
+            <ProjectDomain onDomainChange={setSelectedDomain} />
           </div>
 
-          {/* Project Summary */}
-          <TextAreaField label="Project Summary" placeholder="Write a brief project summary" required />
+          <div className="flex space-x-4">
+            <h3 className="text-lg font-semibold mb-1">Project description/Summary:</h3>
+            <span className="text-red-500 text-sm">Max 500 words</span>
+          </div>
 
-          {/* Submit Button */}
-          <Button type="submit" className="w-full" color="primary">
+          <div className="mb-4">
+            <Textarea
+              placeholder="Enter your description"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className="w-full h-[150px] shadow-lg border border-[#00A8A8] bg-[#E0F7FA] text-[#004D40] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00ACC1] resize-none overflow-y-auto"
+            />
+          </div>
+
+          <div className="mb-4">
+            <TechnologiesUsed onTechnologiesChange={setTechnologies} />
+          </div>
+
+          <div className="flex items-start mb-6">
+            <input
+              type="checkbox"
+              required
+              checked={checkAgree}
+              onChange={() => setCheckAgree(!checkAgree)}
+              className="mt-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+            <p className="text-gray-600 text-sm">
+              I hereby declare that all information provided is true and accurate to the best of my knowledge. I
+              understand that failure to comply may result in project removal.
+            </p>
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          >
             Submit
           </Button>
         </form>

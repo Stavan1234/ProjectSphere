@@ -1,7 +1,7 @@
 import { Chip, Avatar } from "@nextui-org/react";
 
 export default function Developers() {
-  const developers = ["Stavan Kalkumbe", "Anurodh Chandanshiv", "David Almeida"];
+  const developers = ["Stavan Kalkumbe", "Anurodh Chandanshiv", "David Almeida", "Joshua"];
 
   // Find the longest name
   const longestName = developers.reduce((max, developer) =>
@@ -9,7 +9,8 @@ export default function Developers() {
   , '');
 
   return (
-<div className="flex gap-4  text-bold">
+    
+<div className="flex gap-4 text-bold">
 
       {developers.map((developer, index) => (
         <Chip
@@ -29,5 +30,6 @@ export default function Developers() {
         </Chip>
       ))}
     </div>
+  
   );
 }

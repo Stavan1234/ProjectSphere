@@ -59,7 +59,7 @@ const domainData = [
 ];
 
 export default function Technologies() {
-  const [selectedDomain] = useState(domainData[4]); // Setting the first domain as default
+  const [selectedDomain] = useState(domainData[0]); // Setting the first domain as default
 
   return (
     <div className="pl-[20px] pb-[40px] relative top-1/2 translate-y-1/4">
