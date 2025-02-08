@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import CreatorNames from "./creatorname";
 import TechnologiesUsed from "./technologiesused";
 import ProjectDomain from "./ProjectDomain";
+import ThumbnailUploader from "./ThumbnailUploader"; // Import Thumbnail Uploader
 import supabase from "../config/ProjectSphereClient"; 
 import { Button } from "@/components/ui/button"; 
 
@@ -15,13 +16,14 @@ const ProjectUploadForm = () => {
   const [creatorNames, setCreatorNames] = useState([]); // Start as an empty array
   const [technologies, setTechnologies] = useState([]); // Empty array, avoid unnecessary nesting
   const [selectedDomain, setSelectedDomain] = useState("");
+  const [thumbnailUrl, setThumbnailUrl] = useState(null);
   const [checkAgree, setCheckAgree] = useState(false);
 
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!title || !content || creatorNames.length === 0 || technologies.length === 0 || !selectedDomain) {
+    if (!title || !content || creatorNames.length === 0 || technologies.length === 0 || !selectedDomain || !thumbnailUrl) {
       alert("Please fill in all fields.");
       return;
     }
@@ -44,6 +46,7 @@ const ProjectUploadForm = () => {
             Creator_names: creatorNames,
             Tech_Used: technologies,
             Project_Domain: selectedDomain,
+            Thumbnail_URL: thumbnailUrl, // Save thumbnail URL in DB
           }
         ]);
 
@@ -59,6 +62,7 @@ const ProjectUploadForm = () => {
         setCreatorNames([]);
         setTechnologies([]);
         setSelectedDomain("");
+        setThumbnailUrl(null);
         setCheckAgree(false);
       }
     } catch (error) {
@@ -115,6 +119,11 @@ const ProjectUploadForm = () => {
           <div className="mb-4">
             <TechnologiesUsed onTechnologiesChange={setTechnologies} />
           </div>
+
+          {/* Thumbnail Upload Component */}
+             {/* Pass setThumbnailUrl as prop to get the uploaded URL */}
+<ThumbnailUploader onUpload={(url) => setThumbnailUrl(url)} />
+
 
           <div className="flex items-start mb-6">
             <input

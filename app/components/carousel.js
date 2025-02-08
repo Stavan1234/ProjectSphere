@@ -6,85 +6,116 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '../../components/ui/carousel'; // Corrected path
-import {Image} from "@nextui-org/react";
+} from '../../components/ui/carousel';
+import { Image } from "@nextui-org/react";
+import { useEffect, useState } from 'react';
+import supabase from '../config/ProjectSphereClient';
 
-export default function ProjectCarousel() { // ✅ Added parentheses here
+// Define the order of domains
+const domains = [
+  "Web Development",
+  "Machine Learning",
+  "IoT & Embedded Systems",
+  "Robotics and Automation",
+  "Digital Signal Processing & Communications",
+  "Software Development",
+  "Open Domain"
+];
+
+export default function ProjectCarousel() {
+  const [fetchError, setFetchError] = useState(null);
+  const [projectsByDomain, setProjectsByDomain] = useState({});
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("ProjectSphere Form") // Ensure correct table name
+          .select("Project_Title, Thumbnail_URL, Project_Domain, Project_Text_area");
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+          setFetchError("No projects available.");
+          setProjectsByDomain({});
+          return;
+        }
+
+        // Group projects by their domain
+        const groupedProjects = {};
+        data.forEach((project) => {
+          const domain = project.Project_Domain || "Other"; // Default if domain is missing
+          if (!groupedProjects[domain]) groupedProjects[domain] = [];
+          groupedProjects[domain].push(project);
+        });
+
+        setProjectsByDomain(groupedProjects);
+        setFetchError(null);
+      } catch (err) {
+        console.error("Error fetching projects:", err.message);
+        setFetchError("Failed to fetch projects.");
+        setProjectsByDomain({});
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   return (
-    <>
-      {/* Web Development Section */}
-      <div className="w-full max-w-4xl mt-[50px] ml-[-300px] mb-9">
-        <div className="text-2xl font-bold mb-4 text-left">
-          <h2>Web Development</h2>
-        </div>
-        <div className="w-full">
-          <Carousel>
-            <CarouselContent>
-              {[1, 2, 3, 4, 5, 6, 7].map((index) => (
-                <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/5 p-4">
-                  <div className="bg-white/50 backdrop-blur-sm rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    <div className="aspect-square mb-0.5 relative">
-                    <Image
-                         isZoomed
-                         src={`/webdev${index}.jpeg`}
-                         alt={`Project ${index}`}
-                         fill
-                         className="object-cover w-[225px] h-[225px]"
-                    />
+    <div className="w-full max-w-4xl mt-[50px] ml-[-300px] mb-9">
+      {fetchError && <p className="text-center text-red-500">{fetchError}</p>}
 
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-lg text-blue-950 font-semibold mb-05 text-center">Project Ttile {index}</h3>
-                      <p className="text-sm text-gray-600">
-                        This is a sample project description for project {index}
-                      </p>
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="hidden sm:flex" />
-            <CarouselNext className="hidden sm:flex" />
-          </Carousel>
-        </div>
-      </div>
+      {domains.map((domain) => (
+        <section key={domain} className="mb-10 min-h-[360px]"> {/* Adjust height if needed */}
+  <h2 className="text-2xl font-bold mb-1 text-left">{domain}</h2>
 
-      {/* Machine Learning Section */}
-      <div className="w-full max-w-4xl mt-[350px] ml-[-300px] mb-9">
-        <div className="text-2xl font-bold mb-4 text-left">
-          <h2>Machine Learning</h2>
-        </div>
-        <div className="w-full">
-          <Carousel>
-            <CarouselContent>
-              {[1, 2, 3, 4, 5, 6, 7].map((index) => (
-                <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/5 p-4">
-                  <div className="bg-white/50 backdrop-blur-sm rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    <div className="aspect-square mb-0.5 relative">
-                    <Image
-                         isZoomed
-                         src={`/macler${index}.jpeg`}
-                         alt={`Project ${index}`}
-                         fill
-                         className="object-cover w-[225px] h-[225px]"
-                    />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-lg text-blue-950 font-semibold mb-05 text-center">Project {index}</h3>
-                      <p className="text-sm text-gray-600">
-                        This is a sample project description for project {index}
-                      </p>
-                    </div>
+  {projectsByDomain[domain]?.length > 0 ? (
+    <div className="min-h-[250px]"> {/* Ensures space for the carousel */}
+      <Carousel>
+        <CarouselContent>
+          {projectsByDomain[domain].map((project, index) => (
+            <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/5 p-4">
+              <div className="bg-white/50 backdrop-blur-sm rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="aspect-square mb-0.5 relative">
+                  <Image
+                    isZoomed
+                    src={project.Thumbnail_URL || "macler1.jpeg"} 
+                    alt={project.Project_Title || "Untitled Project"}
+                    className="object-cover w-[225px] h-[225px]"
+                  />
+                </div>
+                <div className="p-1">
+                  <h3 className="text-lg text-blue-950 font-semibold mb-1 text-center truncate w-full">
+                    {project.Project_Title || "Untitled Project"}
+                  </h3>
+                  <div className="text-sm text-gray-600 text-center line-clamp-2 overflow-hidden overflow-ellipsis">
+                      {project.Project_Text_area || "No description available."}
                   </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="hidden sm:flex" />
-            <CarouselNext className="hidden sm:flex" />
-          </Carousel>
-        </div>
-      </div>
-    </>
+                  <div className="flex items-center justify-center mt-2">
+                           <span className="text-yellow-500">★★★★☆</span>
+                          <span className="ml-1 text-sm text-gray-600">(4.2)</span>
+                         <span className="ml-4 text-sm text-gray-600">1.2k views</span> {/* Dummy views */}
+                  </div>
+                </div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="hidden sm:flex" />
+        <CarouselNext className="hidden sm:flex" />
+      </Carousel>
+    </div>
+  ) : (
+    <p className="flex justify-center items-center text-gray-500 text-xl font-semibold text-center h-32">
+  No projects available in {domain}.
+</p>
+
+  )}
+</section>
+
+
+
+      ))}
+    </div>
   );
 }
