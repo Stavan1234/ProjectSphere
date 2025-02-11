@@ -16,7 +16,7 @@ export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const router = useRouter(); // Correct import from `next/navigation`
+  const router = useRouter();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -126,7 +126,13 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
-      <div className="hidden lg:block bg-gray-100"></div>
+      <div className="hidden lg:flex justify-center items-center bg-gray-100">
+  <img 
+    src="/login.png" 
+    alt="ProjectSphere Illustration" 
+    className="w-3/4 h-auto object-contain"
+  />
+</div>
     </div>
   );
 }
