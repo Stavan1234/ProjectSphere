@@ -60,7 +60,7 @@ export default function Header() {
            {/* Upload Section */}
            <div className="absolute flex items-center gap-1.5 font-bold" style={{ top: "5px", right: "300px" }}>
              <a
-               href="/uploadform"
+               href="../test"
                className="flex items-center gap-2 p-1.5 bg-transparent hover:bg-green-200 text-gray-800 rounded-full focus:outline-none transition-all duration-300 ease-in-out"
              >
                <Image src="/upload.png" alt="Upload icon" width={30} height={30} />

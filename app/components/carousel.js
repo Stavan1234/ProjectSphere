@@ -15,7 +15,7 @@ import supabase from '../config/ProjectSphereClient';
 const domains = [
   "Web Development",
   "Machine Learning",
-  "IoT & Embedded Systems",
+  "IOT & Embedded Systems",
   "Robotics and Automation",
   "Digital Signal Processing & Communications",
   "Software Development",
