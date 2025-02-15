@@ -9,6 +9,8 @@ import ProjectDomain from "./ProjectDomain";
 import ThumbnailUploader from "./ThumbnailUploader"; // Import Thumbnail Uploader
 import supabase from "../config/ProjectSphereClient"; 
 import { Button } from "@/components/ui/button"; 
+import FileUploadForm from "./uploadfiles";
+import { useEffect } from "react";
 
 const ProjectUploadForm = () => {
   const [title, setTitle] = useState('');
@@ -18,6 +20,13 @@ const ProjectUploadForm = () => {
   const [selectedDomain, setSelectedDomain] = useState("");
   const [thumbnailUrl, setThumbnailUrl] = useState(null);
   const [checkAgree, setCheckAgree] = useState(false);
+  const [imgUrls, setImgUrls] = useState([]);
+  const [vidUrls, setVidUrls] = useState([]);
+  const [docUrls, setDocUrls] = useState([]);
+
+  useEffect(() => {
+    console.log("Updated URLs: ", { imgUrls, vidUrls, docUrls });
+  }, [imgUrls, vidUrls, docUrls]);
 
   // Handle form submission
   const handleSubmit = async (event) => {
@@ -35,6 +44,7 @@ const ProjectUploadForm = () => {
 
     console.log("Form submitted successfully!");
     console.log({ title, content, creatorNames, technologies, selectedDomain });
+    console.log("Submitting with: ", { imgUrls, vidUrls, docUrls });
 
     try {
       const { data, error } = await supabase
@@ -46,7 +56,10 @@ const ProjectUploadForm = () => {
             Creator_names: creatorNames,
             Tech_Used: technologies,
             Project_Domain: selectedDomain,
-            Thumbnail_URL: thumbnailUrl, // Save thumbnail URL in DB
+            Thumbnail_URL: thumbnailUrl,// Save thumbnail URL in DB
+            img_url: imgUrls, // Storing array of image URLs
+            vid_url: vidUrls, // Storing array of video URLs
+            file_url: docUrls, // Storing array of document URLs 
           }
         ]);
 
@@ -64,6 +77,9 @@ const ProjectUploadForm = () => {
         setSelectedDomain("");
         setThumbnailUrl(null);
         setCheckAgree(false);
+        setImgUrls([]);
+        setVidUrls([]);
+        setDocUrls([]);
       }
     } catch (error) {
       console.error("Unexpected error:", error.message);
@@ -122,7 +138,18 @@ const ProjectUploadForm = () => {
 
           {/* Thumbnail Upload Component */}
              {/* Pass setThumbnailUrl as prop to get the uploaded URL */}
-<ThumbnailUploader onUpload={(url) => setThumbnailUrl(url)} />
+                 <ThumbnailUploader onUpload={(url) => setThumbnailUrl(url)} />
+
+           {/* Images, Videos & Doc Uploader */}
+           <FileUploadForm onFilesUpload={(files) => {
+  console.log("Received files:", files);
+
+  setImgUrls((prev) => [...(prev || []), ...files.images]);
+  setVidUrls((prev) => [...(prev || []), ...files.videos]);
+  setDocUrls((prev) => [...(prev || []), ...files.documents]);
+}} />
+
+
 
 
           <div className="flex items-start mb-6">

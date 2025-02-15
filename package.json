@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.744.0",
+    "@aws-sdk/lib-storage": "^3.744.0",
     "@heroui/dropdown": "^2.3.9",
     "@heroui/react": "^2.6.13",
     "@heroui/system": "^2.4.6",
@@ -25,6 +27,7 @@
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
     "embla-carousel-react": "^8.5.1",
     "framer-motion": "^11.16.0",
     "lucide-react": "^0.469.0",
@@ -37,6 +40,7 @@
     "react-modal-image": "^2.6.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
+    "uuid": "^11.0.5",
     "yet-another-react-lightbox": "^3.21.7"
   },
   "devDependencies": {

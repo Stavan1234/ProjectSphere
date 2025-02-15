@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import Header from "../../components/Header";
-import Multimedia from "../../components/Multimedia";
+import Multimedia from "./Multimedia";
 import supabase from "../../config/ProjectSphereClient";
 import Developers from "../developers"; 
 import Technologies from "../TechnologyUsed";
@@ -65,6 +64,7 @@ export default function Project_page() {
       typeof project.Tech_Used === "string"
         ? JSON.parse(project.Tech_Used).map((item) => JSON.parse(item)) // Parse each item
         : project.Tech_Used?.map((item) => (typeof item === "string" ? JSON.parse(item) : item));
+      
     
     
     

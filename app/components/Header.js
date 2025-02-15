@@ -19,7 +19,6 @@ export default function Header() {
 
   return (
     <header>
-<<<<<<< HEAD
            {/* Hamburger Menu */}
            <HamburgerMenu />
      
@@ -80,7 +79,6 @@ export default function Header() {
                <span>Bookmark</span>
              </a>
            </div>
-=======
       {/* Hamburger Menu */}
       <HamburgerMenu />
 
@@ -118,7 +116,7 @@ export default function Header() {
         </form>
       </div>
 
-      {/* Sort Dropdown */}
+      {/* Sort Dropdown
       
       <div className="absolute top-3 left-60">
         
@@ -132,7 +130,7 @@ export default function Header() {
           <option value="highest">Highest First</option>
           <option value="lowest">Lowest First</option>
         </select>
-      </div>
+      </div> */}
 
       {/* Upload Section */}
       <div className="absolute flex items-center gap-1.5 font-bold" style={{ top: "5px", right: "300px" }}>
@@ -155,7 +153,6 @@ export default function Header() {
           <span>Bookmark</span>
         </a>
       </div>
->>>>>>> 453d7985158457604aa0d5bbddd741023ccd9b41
     </header>
   );
 }

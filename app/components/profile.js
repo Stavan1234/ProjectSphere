@@ -102,7 +102,7 @@ const Profile = () => {
             </div>
 
             {/* Error Message */}
-            {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
+            {/* {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>} */}
           </div>
         </PopoverContent>
       </Popover>
