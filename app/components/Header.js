@@ -19,6 +19,7 @@ export default function Header() {
 
   return (
     <header>
+<<<<<<< HEAD
            {/* Hamburger Menu */}
            <HamburgerMenu />
      
@@ -79,6 +80,8 @@ export default function Header() {
                <span>Bookmark</span>
              </a>
            </div>
+=======
+>>>>>>> origin/main
       {/* Hamburger Menu */}
       <HamburgerMenu />
 
