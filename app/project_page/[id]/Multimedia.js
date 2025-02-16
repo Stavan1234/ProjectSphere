@@ -86,7 +86,7 @@ const Multimedia = () => {
                   alt={`Image ${index + 1}`}
                   width={300}
                   height={168}
-                  objectFit="cover"
+                  objectfit="cover"
                   className="rounded-lg"
                 />
               ) : (

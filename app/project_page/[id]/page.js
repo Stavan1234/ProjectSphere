@@ -10,7 +10,7 @@ import Technologies from "../TechnologyUsed";
 import ProjectContent from "../ProjectContent";
 import ProjectLinks from "../ProjectLinks";
 import DownloadLinks from "../DownloadLinks";
-
+import Comments from "../comment"; // ✅ Import Comments Component
 
 export default function Project_page() {
   const { id } = useParams(); // project ID from URL
@@ -54,20 +54,15 @@ export default function Project_page() {
   }
 
   // Parse dynamic data for our components.
-  // If "Creator_names" and "Tech_Used" are stored as JSON strings, parse them.
   const creators =
     typeof project.Creator_names === "string"
       ? JSON.parse(project.Creator_names)
       : project.Creator_names;
       
-      const technologies =
-      typeof project.Tech_Used === "string"
-        ? JSON.parse(project.Tech_Used).map((item) => JSON.parse(item)) // Parse each item
-        : project.Tech_Used?.map((item) => (typeof item === "string" ? JSON.parse(item) : item));
-      
-    
-    
-    
+  const technologies =
+    typeof project.Tech_Used === "string"
+      ? JSON.parse(project.Tech_Used).map((item) => JSON.parse(item)) // Parse each item
+      : project.Tech_Used?.map((item) => (typeof item === "string" ? JSON.parse(item) : item));
 
   // Other fields (userProps is available if you need it)
   const userProps = {
@@ -125,18 +120,24 @@ export default function Project_page() {
       <div className="ml-[25px] mt-12">
         <h2 className="font-bold text-2xl mb-4">Project Description:</h2>
         <div className="ml-4">
-        <ProjectContent content={project.Project_Text_area} />
+          <ProjectContent content={project.Project_Text_area} />
         </div>
       </div>
 
       {/* Project Reference & Links */}
       <div className="ml-[25px] mt-12">
-        <h2 className="font-bold text-2xl mb-4">
-          Project Reference & Links:
-        </h2>
+        <h2 className="font-bold text-2xl mb-4">Project Reference & Links:</h2>
         <div className="ml-4">
           <ProjectLinks />
           <DownloadLinks />
+        </div>
+      </div>
+
+      {/* ✅ Comments Section */}
+      <div className="ml-[25px] mt-12">
+        <h2 className="font-bold text-2xl mb-4">Comments:</h2>
+        <div className="ml-4">
+          <Comments projectId={id} /> {/* Pass project ID to Comments component */}
         </div>
       </div>
     </div>
