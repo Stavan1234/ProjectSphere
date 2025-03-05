@@ -106,7 +106,6 @@ const Carousel = React.forwardRef((
     };
   }, [api, onSelect]);
 
-  // Render the carousel container
   return (
     <CarouselContext.Provider
       value={{
@@ -138,7 +137,7 @@ const Carousel = React.forwardRef((
         aria-roledescription="carousel" // Accessibility description
         {...props} // Spread other props
       >
-        {children} // Render carousel items
+        {children} 
       </div>
     </CarouselContext.Provider>
   );
