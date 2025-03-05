@@ -33,6 +33,9 @@ let header = (
 
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="./globe_ps.png" type="image/png" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {header}
         {children}

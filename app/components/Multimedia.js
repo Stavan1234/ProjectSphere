@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Image } from '@nextui-org/react';
-import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
 
 const Multimedia = () => {
   const [modalImage, setModalImage] = useState('');
@@ -45,7 +45,7 @@ const Multimedia = () => {
               alt={`Image ${index + 1}`}
               width={300}
               height={168}
-              objectFit="cover"
+              objectfit="cover"
               className="rounded-lg"
             />
           </div>

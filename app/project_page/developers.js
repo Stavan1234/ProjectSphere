@@ -1,19 +1,14 @@
 import { Chip, Avatar } from "@nextui-org/react";
 
-export default function Developers() {
-  const developers = ["Stavan Kalkumbe", "Anurodh Chandanshiv", "David Almeida"];
-
-  // Find the longest name
-  const longestName = developers.reduce((max, developer) =>
-    developer.length > max.length ? developer : max
-  , '');
+export default function Developers({ developers }) {
+  if (!developers || developers.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-4 text-bold">
+    <div className="flex gap-4">
       {developers.map((developer, index) => (
         <Chip
           key={index}
-          className="bg-teal-300 text-bold"
+          className="bg-teal-300"
           avatar={
             <Avatar
               name={developer}
@@ -22,7 +17,6 @@ export default function Developers() {
             />
           }
           variant="flat"
-          style={{ width: `${longestName.length * (10+2)}px` }}  // Adjust width based on longest name length
         >
           {developer}
         </Chip>
