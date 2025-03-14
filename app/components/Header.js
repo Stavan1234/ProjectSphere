@@ -2,32 +2,39 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import supabase from "../config/ProjectSphereClient";
 import HamburgerMenu from "./HamburgerMenu";
 import Profile from "./profile";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [query, setQuery] = useState("");
-  const [domains, setDomains] = useState([
-    "Web Development",
-    "Machine Learning",
-    "IoT & Embedded Systems",
-    "Robotics and Automation",
-    "Digital Signal Processing & Communications",
-    "Software Development",
-    "Open Domain",
-  ]);
-  const [selectedDomain, setSelectedDomain] = useState("");
+  const [projects, setProjects] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    // Ensure this runs only on client
-  }, []);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (query.trim()) {
-      console.log("Search Query:", query);
+    if (!query.trim()) {
+      setProjects([]);
+      setShowDropdown(false);
+      return;
     }
-  };
+
+    const fetchProjects = async () => {
+      const { data, error } = await supabase
+        .from("ProjectSphere_Names")  
+        .select("project_title, project_id")  
+        .ilike("project_title", `%${query}%`); 
+
+      if (error) {
+        console.error("Error fetching projects:", error);
+      } else {
+        setProjects(data);
+        setShowDropdown(true);
+      }
+    };
+
+    fetchProjects();
+  }, [query]); // Runs whenever query changes
 
   return (
     <header>
@@ -41,53 +48,48 @@ export default function Header() {
 
       {/* Search Bar */}
       <div className="absolute w-full flex justify-center" style={{ top: "10px" }}>
-        <form
-          onSubmit={handleSearch}
-          className="flex w-[90%] max-w-lg rounded-full overflow-hidden shadow-md"
-          style={{ backgroundColor: "#73D8E3" }}
-        >
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search for projects by name or keyword..."
-            className="w-full px-4 py-2 text-black bg-[#73D8E3] border-none focus:outline-none placeholder-gray-500"
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 cursor-pointer flex items-center justify-center"
+        <div className="relative w-[90%] max-w-lg">
+          <form
+            onSubmit={(e) => e.preventDefault()} // Prevent page reload
+            className="flex w-full rounded-full overflow-hidden shadow-md"
             style={{ backgroundColor: "#73D8E3" }}
           >
-            <Image
-              src="/Magnifying_glass.png"
-              alt="Search icon"
-              width={20}
-              height={20}
-              priority
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search for projects by name or keyword..."
+              className="w-full px-4 py-2 text-black bg-[#73D8E3] border-none focus:outline-none placeholder-gray-500"
             />
-          </button>
-        </form>
-      </div>
+            <button
+              type="submit"
+              className="px-4 py-2 cursor-pointer flex items-center justify-center"
+              style={{ backgroundColor: "#73D8E3" }}
+            >
+              <Image src="/Magnifying_glass.png" alt="Search icon" width={20} height={20} priority />
+            </button>
+          </form>
 
-      {/* Domain Filter
-      <div className="absolute top-[70px] left-40">
-        <label htmlFor="domain" className="mr-2 font-medium">
-          Filter by Domain:
-        </label>
-        <select
-          id="domain"
-          className="p-2 border rounded-md shadow-sm "
-          value={selectedDomain}
-          onChange={(e) => setSelectedDomain(e.target.value)}
-        >
-          <option value="">All Domains</option>
-          {domains.map((domain) => (
-            <option key={domain} value={domain}>
-              {domain}
-            </option>
-          ))}
-        </select>
-      </div> */}
+          {/* Dropdown Search Results */}
+          {showDropdown && projects.length > 0 && (
+            <div className="absolute w-full bg-white shadow-lg rounded-md mt-1">
+              <ul>
+                {projects.map((project) => (
+                  <li
+                    key={project.project_id}
+                    className="p-2 border-b hover:bg-gray-200 cursor-pointer"
+                    onClick={() => {
+                      window.location.href = `/project_page/${project.project_id}`;
+                    }}
+                  >
+                    {project.project_title}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* Upload Section */}
       <div className="absolute flex items-center gap-1.5 font-bold" style={{ top: "5px", right: "300px" }}>
