@@ -13,18 +13,12 @@ export default function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    if (!query.trim()) {
-      setProjects([]);
-      setShowDropdown(false);
-      return;
-    }
-
     const fetchProjects = async () => {
       const { data, error } = await supabase
-        .from("ProjectSphere_Names")  
-        .select("project_title, project_id")  
-        .ilike("project_title", `%${query}%`); 
-
+        .from("ProjectSphere_Names")  // ✅ Ensure correct table name
+        .select("project_title, project_id")
+        .ilike("project_title", `%${query}%`);  // ✅ Search by name
+  
       if (error) {
         console.error("Error fetching projects:", error);
       } else {
@@ -32,9 +26,14 @@ export default function Header() {
         setShowDropdown(true);
       }
     };
-
-    fetchProjects();
-  }, [query]); // Runs whenever query changes
+  
+    if (query.trim()) {
+      fetchProjects();
+    } else {
+      setProjects([]); // Clear search results when input is empty
+    }
+  }, [query]);  // ✅ Runs whenever query changes
+  
 
   return (
     <header>
