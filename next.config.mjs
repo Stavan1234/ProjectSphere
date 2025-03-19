@@ -5,7 +5,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverActions: true, // Enable App Router APIs
+    serverActions: {}, // Enable App Router APIs
   },
 };
 

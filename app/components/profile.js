@@ -58,6 +58,21 @@ const Profile = () => {
     }
   };
 
+  const myproject = async (event) => {
+    event.preventDefault(); 
+    setLoading(true); 
+    setErrorMessage(""); 
+  
+    try {
+      router.push("/myprojects");
+    } catch (error) {
+      console.error("Error:", error);
+      setErrorMessage("An error occurred. Please try again."); // Set error message
+    } finally {
+      setLoading(false); // Reset loading state
+    }
+  };
+
   return (
     <div className="flex flex-wrap gap-4">
       <Popover showArrow backdrop="blur" offset={10} placement="bottom">
@@ -90,9 +105,13 @@ const Profile = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-col gap-2 mt-4 w-full">
-              <Button className="bg-gradient-to-r from-blue-500 to-green-400 text-white py-2 px-4 rounded-lg hover:opacity-80">
-                My Projects
-              </Button>
+            <Button
+  onClick={myproject} // Attach the myproject function here
+  className="bg-gradient-to-r from-blue-500 to-green-400 text-white py-2 px-4 rounded-lg hover:opacity-80"
+  disabled={loading} // Disable the button while loading
+>
+  {loading ? "Redirecting..." : "My Projects"}
+</Button>
               <Button className="bg-gradient-to-r from-blue-500 to-green-400 text-white py-2 px-4 rounded-lg hover:opacity-80">
                 Profile Settings
               </Button>
