@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Input } from "@nextui-org/react";
 import { Textarea } from "@/components/ui/textarea"; 
 import CreatorNames from "./creatorname";
+import Header from "../components/Header";
 import TechnologiesUsed from "./technologiesused";
 import ProjectDomain from "./ProjectDomain";
 import ThumbnailUploader from "./ThumbnailUploader"; // Import Thumbnail Uploader
@@ -142,6 +143,8 @@ const ProjectUploadForm = () => {
   
 
   return (
+
+    
     <div className="min-h-screen flex items-center justify-center">
       <div className="p-5 w-full max-w-4xl">
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">Project Uploading Form</h1>
@@ -230,6 +233,7 @@ const ProjectUploadForm = () => {
         </form>
       </div>
     </div>
+
   );
 };
 

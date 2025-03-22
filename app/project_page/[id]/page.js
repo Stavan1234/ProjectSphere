@@ -82,11 +82,12 @@ export default function Project_page() {
 
       
       
-  const technologies =
-    typeof project.Tech_Used === "string"
-      ? JSON.parse(project.Tech_Used) // Ensure it's parsed only once
-      : project.Tech_Used;
+      const technologies =
+      typeof project.Tech_Used === "string"
+        ? JSON.parse(project.Tech_Used).map((item) => JSON.parse(item)) // Parse each item
+        : project.Tech_Used?.map((item) => (typeof item === "string" ? JSON.parse(item) : item));
 
+     
   // Other fields (userProps is available if you need it)
   const userProps = {
     name: creators?.[0] || "Unknown Creator", // using the first name as a representative
