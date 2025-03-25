@@ -105,7 +105,7 @@ export default function Header() {
       {/* Bookmark Section */}
       <div className="absolute flex items-center gap-1.5 font-bold" style={{ top: "9px", right: "170px" }}>
         <a
-          href="/bookmark"
+          href="/bookmarks"
           className="flex items-center gap-2 p-1.5 bg-transparent hover:bg-green-200 text-gray-800 rounded-full focus:outline-none transition-all duration-300 ease-in-out"
         >
           <Image src="/bookmark.png" alt="Bookmark icon" width={15} height={15} />
