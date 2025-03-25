@@ -6,12 +6,11 @@ import Header from "../../components/Header";
 import Multimedia from "./Multimedia";
 import supabase from "../../config/ProjectSphereClient";
 import Developers from "../developers"; 
-import { FaExternalLinkAlt } from "react-icons/fa";
-import { AiOutlineStar } from "react-icons/ai";
 import Technologies from "../TechnologyUsed";
 import ProjectContent from "../ProjectContent";
 import ProjectLinks from "./ProjectLinks";
 import DownloadLinks from "../DownloadLinks";
+import BookmarkButton from "../../bookmarks/BookmarkButton";
 import Comments from "../comment"; // ✅ Import Comments Component
 
 export default function Project_page() {
@@ -97,8 +96,11 @@ export default function Project_page() {
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-gradient-to-b from-[#DEFAFF] via-[#BCFFEF] to-[#FFFFFF] bg-fixed">
+
       {/* Reusable Header */}
       <Header />
+
+      <BookmarkButton projectId={id} />
 
       {/* Main Content */}
       <main className="flex flex-col items-center pt-20 pb-10 px-4 min-h-full w-full">
