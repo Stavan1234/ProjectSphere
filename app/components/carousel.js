@@ -68,7 +68,7 @@ export default function ProjectCarousel() {
   };
 
   return (
-    <div className="w-full max-w-4xl mt-[50px] ml-[-300px] mb-9">
+    <div className="w-full max-w-4xl mt-[50px] ml-[-300px] mb-20 pb-12">
       {fetchError && <p className="text-center text-red-500">{fetchError}</p>}
 
       {domains.map((domain) => (

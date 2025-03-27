@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Input } from "@nextui-org/react";
 import { Textarea } from "@/components/ui/textarea"; 
 import CreatorNames from "./creatorname";
-import Header from "../components/Header";
+// import Header from "../components/Header";
 import TechnologiesUsed from "./technologiesused";
 import ProjectDomain from "./ProjectDomain";
 import ThumbnailUploader from "./ThumbnailUploader"; // Import Thumbnail Uploader
