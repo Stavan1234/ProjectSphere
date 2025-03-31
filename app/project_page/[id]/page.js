@@ -8,14 +8,16 @@ import supabase from "../../config/ProjectSphereClient";
 import Developers from "../developers"; 
 import Technologies from "../TechnologyUsed";
 import ProjectContent from "../ProjectContent";
-import ProjectLinks from "../ProjectLinks";
+import ProjectLinks from "./ProjectLinks";
 import DownloadLinks from "../DownloadLinks";
+import BookmarkButton from "../../bookmarks/BookmarkButton";
 import Comments from "../comment"; // ✅ Import Comments Component
 
 export default function Project_page() {
-  const { id } = useParams(); // project ID from URL
+  const { id } = useParams(); // Project ID from URL
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [links, setLinks] = useState([]); // State for storing links
 
   // Fetch project data from Supabase
   useEffect(() => {
@@ -26,10 +28,28 @@ export default function Project_page() {
           .select("*")
           .eq("id", id)
           .single();
+
         if (error) {
           console.error("Error fetching project:", error);
         } else {
+
           setProject(data);
+
+          // Debug: Check what we received for links
+
+          // Parse and set links safely
+          if (data.links) {
+            try {
+              const parsedLinks = Array.isArray(data.links)
+              ? data.links.map(link => (typeof link === "string" ? JSON.parse(link) : link))
+              : [];
+            setLinks(parsedLinks);
+          
+              setLinks(parsedLinks);
+            } catch (parseError) {
+              console.error("Error parsing links JSON:", parseError);
+            }
+          }
         }
         setLoading(false);
       };
@@ -58,12 +78,15 @@ export default function Project_page() {
     typeof project.Creator_names === "string"
       ? JSON.parse(project.Creator_names)
       : project.Creator_names;
-      
-  const technologies =
-    typeof project.Tech_Used === "string"
-      ? JSON.parse(project.Tech_Used).map((item) => JSON.parse(item)) // Parse each item
-      : project.Tech_Used?.map((item) => (typeof item === "string" ? JSON.parse(item) : item));
 
+      
+      
+      const technologies =
+      typeof project.Tech_Used === "string"
+        ? JSON.parse(project.Tech_Used).map((item) => JSON.parse(item)) // Parse each item
+        : project.Tech_Used?.map((item) => (typeof item === "string" ? JSON.parse(item) : item));
+
+     
   // Other fields (userProps is available if you need it)
   const userProps = {
     name: creators?.[0] || "Unknown Creator", // using the first name as a representative
@@ -73,8 +96,11 @@ export default function Project_page() {
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-gradient-to-b from-[#DEFAFF] via-[#BCFFEF] to-[#FFFFFF] bg-fixed">
+
       {/* Reusable Header */}
       <Header />
+
+      <BookmarkButton projectId={id} />
 
       {/* Main Content */}
       <main className="flex flex-col items-center pt-20 pb-10 px-4 min-h-full w-full">
@@ -128,7 +154,7 @@ export default function Project_page() {
       <div className="ml-[25px] mt-12">
         <h2 className="font-bold text-2xl mb-4">Project Reference & Links:</h2>
         <div className="ml-4">
-          <ProjectLinks />
+          <ProjectLinks links={links} /> {/* Pass links as a prop */}
           <DownloadLinks />
         </div>
       </div>

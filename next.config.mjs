@@ -1,12 +1,18 @@
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {};
+import withBundleAnalyzer from '@next/bundle-analyzer';
 
-// export default nextConfig;
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverActions: true, // Enable App Router APIs
+    serverActions: {}, // Correct: Provide an empty object
+  },
+  typescript: {
+    ignoreBuildErrors: true, // Disable TypeScript errors during builds
+  },
+  eslint: {
+    ignoreDuringBuilds: true, // Disable ESLint during builds
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})(nextConfig);

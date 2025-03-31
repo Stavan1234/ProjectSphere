@@ -116,7 +116,7 @@ export default function HamburgerMenu() {
           </div>
           <ul className="mt-2">
             {[
-              { href: "/my_projects", icon: "/myProject.png", label: "My Projects" },
+              { href: "../myprojects", icon: "/myProject.png", label: "My Projects" },
               { href: "/profile_setting", icon: "/Profileset.png", label: "Profile Setting" },
               { href: "/feedback", icon: "/Feedback.png", label: "Feedback" },
               { href: "/top_projects", icon: "/topRated.png", label: "Top Rated Projects" },

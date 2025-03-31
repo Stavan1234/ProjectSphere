@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import supabase from "../config/ProjectSphereClient"; // ✅ Use friend's database
+import supabase from "../config/ProjectSphereClient";
 import { useParams } from "next/navigation";
 
 const Comments = () => {
-    const { id: projectId } = useParams(); // Get project ID from URL
+    const { id: projectId } = useParams(); 
     const [reviews, setReviews] = useState([]);
     const [username, setUsername] = useState("");
     const [comment, setComment] = useState("");
     const [selectedRating, setSelectedRating] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [sortOrder, setSortOrder] = useState("desc"); // Sort by highest rating first
+    const [sortOrder, setSortOrder] = useState("desc");
 
     const fetchReviews = async () => {
         setLoading(true);
@@ -51,7 +51,7 @@ const Comments = () => {
             created_at: new Date().toISOString(),
         };
 
-        const { error } = await supabase.from("comments").insert([newReview]); // ✅ Use friend's Supabase
+        const { error } = await supabase.from("comments").insert([newReview]); 
 
         if (error) {
             console.error("Error submitting review:", error);
