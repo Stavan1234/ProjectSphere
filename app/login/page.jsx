@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 
 const supabase = createClient(
   "https://kbvpjhjgxogmezhtskaw.supabase.co",
@@ -15,10 +15,9 @@ export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
   const router = useRouter();
 
-  // Login Function
+  // Login with Email & Password
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -26,19 +25,11 @@ export default function LoginPage() {
     setSuccessMessage("");
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        setErrorMessage(error.message);
-      } else {
-        router.push("/");
-      }
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) setErrorMessage(error.message);
+      else router.push("/");
     } catch (error) {
       setErrorMessage("An unexpected error occurred.");
-      console.error("Login error:", error);
     } finally {
       setLoading(false);
     }
@@ -47,18 +38,22 @@ export default function LoginPage() {
   // GitHub Login
   const handleGithubLogin = async () => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "github",
-      });
-
-      if (error) {
-        setErrorMessage(error.message);
-      } else {
-        router.push("/");
-      }
+      const { error } = await supabase.auth.signInWithOAuth({ provider: "github" });
+      if (error) setErrorMessage(error.message);
+      else router.push("/");
     } catch (error) {
       setErrorMessage("An unexpected error occurred.");
-      console.error("GitHub login error:", error);
+    }
+  };
+
+  // Google Login
+  const handleGoogleLogin = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({ provider: "google" });
+      if (error) setErrorMessage(error.message);
+      else router.push("/");
+    } catch (error) {
+      setErrorMessage("An unexpected error occurred.");
     }
   };
 
@@ -70,19 +65,11 @@ export default function LoginPage() {
     setSuccessMessage("");
 
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-
-      if (error) {
-        setErrorMessage(error.message);
-      } else {
-        setSuccessMessage("Account created! Check your email for confirmation.");
-      }
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) setErrorMessage(error.message);
+      else setSuccessMessage("Account created! Check your email for confirmation.");
     } catch (error) {
       setErrorMessage("An unexpected error occurred.");
-      console.error("Sign-up error:", error);
     } finally {
       setLoading(false);
     }
@@ -97,77 +84,30 @@ export default function LoginPage() {
           </h1>
         </div>
         <div className="w-full max-w-md bg-white shadow-md p-6 rounded-lg">
-          <h2 className="text-2xl font-semibold text-center mb-4">
-            Login to your account
-          </h2>
+          <h2 className="text-2xl font-semibold text-center mb-4">Login to your account</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm text-gray-700">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              <label htmlFor="email" className="block text-sm text-gray-700">Email</label>
+              <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm text-gray-700">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              <label htmlFor="password" className="block text-sm text-gray-700">Password</label>
+              <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
             {errorMessage && <p className="text-sm text-red-600">{errorMessage}</p>}
             {successMessage && <p className="text-sm text-green-600">{successMessage}</p>}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-              disabled={loading}
-            >
-              {loading ? "Logging in..." : "Login"}
-            </button>
+            <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
           </form>
 
-          {/* GitHub Login */}
           <div className="mt-4 text-center text-gray-500">Or continue with</div>
-          <button
-            onClick={handleGithubLogin}
-            className="mt-4 w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800 transition"
-          >
-            Login with GitHub
-          </button>
+          <button onClick={handleGithubLogin} className="mt-4 w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800 transition">Login with GitHub</button>
+          <button onClick={handleGoogleLogin} className="mt-2 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-500 transition">Login with Google</button>
 
-          {/* Sign-Up Section */}
-          <p className="mt-4 text-center text-sm text-gray-600">
-            Don’t have an account?{" "}
-            <button
-              onClick={handleSignUp}
-              className="text-blue-600 hover:underline"
-              disabled={loading}
-            >
-              {loading ? "Creating account..." : "Sign up"}
-            </button>
-          </p>
+          <p className="mt-4 text-center text-sm text-gray-600">Don’t have an account? <button onClick={handleSignUp} className="text-blue-600 hover:underline" disabled={loading}>{loading ? "Creating account..." : "Sign up"}</button></p>
         </div>
       </div>
-
-      {/* Illustration on the Right Side */}
       <div className="hidden lg:flex justify-center items-center bg-gray-100">
-        <img
-          src="/login.png"
-          alt="ProjectSphere Illustration"
-          className="w-5/5 h-auto object-contain"
-        />
+        <img src="/login.png" alt="ProjectSphere Illustration" className="w-5/5 h-auto object-contain" />
       </div>
     </div>
   );
