@@ -58,6 +58,18 @@ const Profile = () => {
     }
   };
 
+  const getDisplayName = (fullName) => {
+    if (!fullName) return "User";
+    
+    // Get first name only
+    const firstName = fullName.split(' ')[0];
+    
+    // Shorten if needed (max 7 characters)
+    return firstName.length > 7 
+      ? `${firstName.substring(0, 7)}...`
+      : firstName;
+  };
+
   const myproject = async (event) => {
     event.preventDefault(); 
     setLoading(true); 
@@ -84,7 +96,9 @@ const Profile = () => {
               className="rounded-full mr-2"
               style={{ width: "30px", height: "30px" }}
             />
-            <span className="text-lg text-black">{userName}</span>
+            <span className="text-lg text-black">
+  {getDisplayName(userName)}
+</span>
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[300px] h-[360px] bg-green-200 border border-gray-300 shadow-lg rounded-lg p-4">
