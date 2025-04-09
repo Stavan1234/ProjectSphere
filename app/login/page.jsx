@@ -36,15 +36,15 @@ export default function LoginPage() {
   };
 
   // GitHub Login
-  const handleGithubLogin = async () => {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({ provider: "github" });
-      if (error) setErrorMessage(error.message);
-      else router.push("/");
-    } catch (error) {
-      setErrorMessage("An unexpected error occurred.");
-    }
-  };
+  // const handleGithubLogin = async () => {
+  //   try {
+  //     const { error } = await supabase.auth.signInWithOAuth({ provider: "github" });
+  //     if (error) setErrorMessage(error.message);
+  //     else router.push("/");
+  //   } catch (error) {
+  //     setErrorMessage("An unexpected error occurred.");
+  //   }
+  // };
 
   // Google Login
   const handleGoogleLogin = async () => {
@@ -100,8 +100,26 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-4 text-center text-gray-500">Or continue with</div>
-          <button onClick={handleGithubLogin} className="mt-4 w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800 transition">Login with GitHub</button>
-          <button onClick={handleGoogleLogin} className="mt-2 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-500 transition">Login with Google</button>
+          {/* <button onClick={handleGithubLogin} className="mt-4 w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800 transition">Login with GitHub</button> */}
+          {/* <button onClick={handleGoogleLogin} className="mt-2 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-500 transition">Login with Google</button> */}
+          <button
+  onClick={handleGoogleLogin}
+  className="
+    w-full flex items-center justify-center gap-3
+    py-2.5 px-4 rounded-lg
+    bg-white text-gray-700 font-medium
+    border border-[#dadce0]
+    hover:bg-[#f8f9fa] transition
+    shadow-sm
+  "
+>
+  <img 
+    src="https://www.google.com/favicon.ico" 
+    alt="Google" 
+    className="w-5 h-5"
+  />
+  <span>Continue with Google</span>
+</button>
 
           <p className="mt-4 text-center text-sm text-gray-600">Don’t have an account? <button onClick={handleSignUp} className="text-blue-600 hover:underline" disabled={loading}>{loading ? "Creating account..." : "Sign up"}</button></p>
         </div>
