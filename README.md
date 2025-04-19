@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ProjectSphere 🚀
 
-## Getting Started
+**The ultimate student project showcase—discover, upload, and get inspired across all domains.**
 
-First, run the development server:
+ProjectSphere is a web application designed for students to showcase their projects across various domains, allowing them to upload, manage, and share multimedia content such as documents, images, and videos. It serves as a platform for inspiration, learning, and preventing plagiarism in academic projects.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🌍 Features
+
+- **Student Project Showcase**: Upload and display your project with rich multimedia content.
+- **Bookmark Projects**: Save interesting projects for later review, just like a "Watch Later" feature.
+- **Search Projects**: Discover projects based on domains, technologies, and keywords.
+- **Domain-based Sorting**: Categorized project display, from web development to robotics and more.
+- **Multimedia Storage**: Upload images, documents, videos, and more to AWS S3.
+- **Responsive Design**: Optimized for both desktop and mobile users with NextUI.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js, NextUI, JavaScript
+- **Backend**: Supabase (Auth & Database)
+- **Multimedia Storage**: AWS S3 Bucket
+- **Styling**: TailwindCSS
+
+---
+
+## ⚙️ Installation Instructions
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/Stavan1234/ProjectSphere.git
+   cd ProjectSphere
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Create an `.env.local` file**:
+   - Set up your environment variables for Supabase and AWS S3 (check `config/ProjectSphereClient.js` for variable names).
+
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🚀 Usage
+
+Once the project is up and running, you can:
+- **Sign up / Log in** to access the dashboard.
+- **Upload your project**: Add details like title, description, domain, technologies used, and upload multimedia.
+- **Search and filter projects** by domain or keywords to discover new ideas.
+- **Bookmark** projects you find inspiring.
+
+---
+
+## 🔑 Project Structure
+
+Here's a breakdown of the important folders and files in the project:
+
+```
+project-sphere/
+├── app/
+│   ├── api/                 # API routes for project upload and management
+│   ├── bookmarks/           # Bookmark button functionality
+│   ├── components/          # Reusable components (UI elements)
+│   ├── myprojects/          # User's uploaded projects
+│   ├── project_page/        # Individual project detail pages
+│   ├── SearchProject/       # Search functionality for projects
+├── public/                  # Static files like images and icons
+├── lib/                     # Utility functions
+├── utils/                   # Miscellaneous helpers
+└── README.md                # This file!
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🤝 Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Contributions are welcome! To contribute:
 
-## Learn More
+1. Fork the repository.
+2. Create your feature branch (`git checkout -b feature-name`).
+3. Commit your changes (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature-name`).
+5. Open a pull request.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+🏗️ Future Enhancements
+- Live Demo: Once deployed, a link will be added here.
+- AI Chatbot: An AI chatbot to guide users through the website, answer queries, and help with project uploads and features.
+- Community & Threads: A community feature allowing users to interact, share ideas, and discuss projects through threaded discussions.
+- AI Suggestions: AI-powered suggestions when a user opens a project, offering related research papers, tools, and resources from the web. These will be displayed like smart search engine results with links to relevant content.
+- Gamification: Introduce gamified elements like achievement badges, XP points, leaderboards, and rewards to enhance user engagement and motivation.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🏆 Status
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is a **work in progress**, and we’re constantly adding new features and improving the platform.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📸 Screenshots
+
+![Group 3](https://github.com/user-attachments/assets/b515301f-b3e1-4754-82ca-8a409de71c7a)
+
+
+---
+
+**Ready to explore and contribute? Let's build something awesome together! 🚀**
