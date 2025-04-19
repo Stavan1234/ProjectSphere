@@ -112,6 +112,10 @@ This project is a **work in progress**, and we’re constantly adding new featur
 ## 📸 Screenshots
 
 ![Group 3](https://github.com/user-attachments/assets/b515301f-b3e1-4754-82ca-8a409de71c7a)
+![Group 4](https://github.com/user-attachments/assets/38693e27-970d-44d8-9c26-6ed04bc15520)
+![Group 5](https://github.com/user-attachments/assets/424dfc82-3152-4005-881d-3fbfb49ddbb1)
+![Group 6](https://github.com/user-attachments/assets/0805e2f4-ac25-4844-91d8-c71c591945da)
+
 
 
 ---
